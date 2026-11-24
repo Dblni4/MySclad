@@ -1,25 +1,30 @@
 package pages;
 
+import Models.UserInfo;
 import elements.Button;
 import elements.Input;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 
 public class UserSettingsPage extends BasePage {
 
     private static final By groupLabelValueByDefault = By.xpath("//div[text()='Значения по умолчанию']");
+    private static final By userSaveLocator = By.xpath("//div[text()='Сотрудник сохранен']");
 
     public UserSettingsPage(WebDriver driver) {
         super(driver);
     }
 
-    public void createUserInfo(String name, String secondName, String surName, String phone, String post) {
-        new Input(driver, "Имя").setValueInInput(name);
-        new Input(driver, "Отчество").setValueInInput(secondName);
-        new Input(driver, "Фамилия").setValueInInput(surName);
-        new Input(driver, "Телефон").setValueInInput(phone);
-        new Input(driver, "Должность").setValueInInput(post);
+    public void createUserInfo(UserInfo userInfo) {
+        new Input(driver, "Имя").setValueInInput(userInfo.getName());
+        new Input(driver, "Отчество").setValueInInput(userInfo.getSecondName());
+        new Input(driver, "Фамилия").setValueInInput(userInfo.getSurName());
+        new Input(driver, "Телефон").setValueInInput(userInfo.getPhone());
+        new Input(driver, "Должность").setValueInInput(userInfo.getPost());
     }
 
     public void clickSaveButton() {
@@ -29,5 +34,10 @@ public class UserSettingsPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         return isExist(groupLabelValueByDefault);
+    }
+
+    public void userSave() {
+        String text = driver.findElement(userSaveLocator).getText();
+        assertEquals(text, "Сотрудник сохранен", "Ответ неверный");
     }
 }
