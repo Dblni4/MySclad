@@ -10,7 +10,7 @@ public class Input {
 
     WebDriver driver;
     String label;
-    String inputLocator = "//span[text()='%s']/../../../..//input[contains(@class,'gwt-TextBox')]";
+    String inputLocator = "//span[text()='%s']/../../..//input[contains(@class,'gwt-TextBox')]";
 
     public Input(WebDriver driver, String label) {
         this.label = label;
